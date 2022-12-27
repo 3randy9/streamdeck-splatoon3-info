@@ -2,7 +2,7 @@
   "Actions": [
     {
       "Icon": "images/action1.icon",
-      "Name": "Your first action",
+      "Name": "Splatoon3 Current Stage X action",
       "States": [
         {
           "Image": "images/action1.key",
@@ -12,17 +12,17 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "",
-      "UUID": "reverse.dns.formatted.namespace.action"
+      "UUID": "purini.spla3.action"
     }
   ],
   "SDKVersion": 2,
-  "Author": "your name",
+  "Author": "purini",
   "CodePath": "plugin.html",
   "PropertyInspectorPath": "propertyinspector.html",
-  "Name": "streamdeck template",
+  "Name": "Splatoon3 Stage Info",
   "Description": "a description",
   "Icon": "images/pluginIcon",
-  "Version": "0.0.0-development",
+  "Version": "1.0.0-development",
   "OS": [
     {
       "Platform": "mac",
