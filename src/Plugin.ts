@@ -1,45 +1,51 @@
 import { Streamdeck } from '@rweich/streamdeck-ts';
+import format from 'date-fns/format';
 
 import { API_URL, areaImage64, asariImage64, hokoImage64, yaguraImage64 } from './Constants';
 
-// 型書く
-// type ApiData = {};
+type RuleKey = 'AREA' | 'LOFT' | 'GOAL' | 'CLAM';
+type ApiData = {
+  results: {
+    start_time: string; // datetime
+    end_time: string; // datetime
+    rule: {
+      key: RuleKey;
+      name: string;
+    };
+    stages: {
+      id: number;
+      name: string;
+      image: string;
+    }[];
+
+    is_fest: boolean;
+  }[];
+};
+
+const RULE_IMAGES: { [key in RuleKey]: string } = {
+  AREA: areaImage64,
+  CLAM: asariImage64,
+  GOAL: hokoImage64,
+  LOFT: yaguraImage64,
+};
 
 const plugin = new Streamdeck().plugin();
 
-// your code here..
-// plugin.on('willAppear', ({ context }) => {
-//   plugin.setTitle('test', context);
-// });
-
 plugin.on('keyDown', ({ context }) => {
+  // 別の情報見たくなったらURLいい感じにする
   fetch(`${API_URL}/x/now`)
     .then((response) => response.json())
-    .then((data) => {
-      const currentXRule = data.results[0].rule.name;
+    .then((data: ApiData) => {
+      const currentXRule = data.results[0].rule.key;
 
-      switch (currentXRule) {
-        case 'ガチエリア': {
-          plugin.setImage(areaImage64, context);
-          return;
-        }
-        case 'ガチヤグラ': {
-          plugin.setImage(yaguraImage64, context);
-          return;
-        }
-        case 'ガチホコ': {
-          plugin.setImage(hokoImage64, context);
-          return;
-        }
-        case 'ガチアサリ': {
-          plugin.setImage(asariImage64, context);
-          return;
-        }
-        default: {
-          plugin.setTitle('??', context);
-          return;
-        }
-      }
+      plugin.setImage(RULE_IMAGES[currentXRule], context);
+      return;
+    })
+    .finally(() => {
+      const now = new Date();
+      const currentTime = format(now, 'HH:mm:ss');
+
+      plugin.setTitle(currentTime, context);
     })
     .catch(() => plugin.setTitle('NG', context));
 });

@@ -18,7 +18,8 @@
     "watch": "webpack watch --mode=development"
   },
   "dependencies": {
-    "@rweich/streamdeck-ts": "^4.0.0"
+    "@rweich/streamdeck-ts": "^4.0.0",
+    "date-fns": "^2.29.3"
   },
   "devDependencies": {
     "@amille/semantic-release-plugins": "^3.3.10",
